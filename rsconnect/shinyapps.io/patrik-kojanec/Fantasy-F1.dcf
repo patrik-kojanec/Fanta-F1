@@ -1,0 +1,14 @@
+name: Fantasy-F1
+title: Fantasy-F1
+username:
+account: patrik-kojanec
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 5925038
+bundleId: 5722412
+url: https://patrik-kojanec.shinyapps.io/Fantasy-F1/
+when: 1648132156.11355
+lastSyncTime: 1648132156.11355
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: backup.zip
