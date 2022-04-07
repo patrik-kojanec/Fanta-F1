@@ -1,0 +1,12 @@
+# Navodila za app
+
+App jma 6 tab:
+	- Trenutni gp: Na tej schermati so prikazani rezultati useh sessioni za trenutni GP. Če ni še rezultatov piše d jh ni še. In futuro bm provu npist tj cajte in distacche, ma z zdej nism jmu cajta.
+	- Klassifica piloti: Pokaže classifico totale in uno za GP selezionado. Ni rečeno d so točne klassifike (kdr je vc njh k jma iste punte), morm malo popraut. Vc naprej bm dodau opcijo d pokaže lhko samo eno session na embt.
+	- Klassifica skuadre: ista storia kukr za piloti
+	- Formazioni: pokaže kdu je dau katjro formazion za GP/sessioni
+	- Oddaj Formazion: Tle lahko usak odda formazion. Za oddat formazion je treba prej accedjrt, de piše login-status: Granted! Za accedjrt je treba zbrt username, npist password in prtisnt btun login. Passord je "AAA{st}", kjer {st} je stevilka vrstnega reda kukr je zapisn username. Tipo, Akinen jma passw
+	AAA1, Carlone AAA2, ... Pole bšta zbrat session in nrt formazion in salvjrt.
+	- Regolamento: abbastanca samoumeuno
+	
+In futuro bmo nrdili tdi tab za statistike.... Kdr bo cejt z sprogramjrt.

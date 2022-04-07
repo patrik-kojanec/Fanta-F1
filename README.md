@@ -4,4 +4,6 @@ App written using R and Shiny.
 
 # TODOs:
 
-- [ ] Bla bla bla
+- [ ] Dodaj sekcijo Statistike
+- [ ] Dodaj moznost izbire session za klassifico (totale, gara, quali, sprint)
+- [ ] Popravi datum in zazetek sprint in quali za sprint GPs

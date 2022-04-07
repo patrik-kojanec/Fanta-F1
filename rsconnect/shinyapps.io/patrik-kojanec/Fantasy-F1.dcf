@@ -5,10 +5,10 @@ account: patrik-kojanec
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 5925038
-bundleId: 5722412
+bundleId: 5773860
 url: https://patrik-kojanec.shinyapps.io/Fantasy-F1/
-when: 1648132156.11355
-lastSyncTime: 1648132156.11355
+when: 1649330870.75675
+lastSyncTime: 1649330870.75675
 asMultiple: FALSE
 asStatic: FALSE
 ignoredFiles: backup.zip

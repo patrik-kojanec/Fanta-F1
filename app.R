@@ -18,7 +18,9 @@ ui <- navbarPage(
   tabPanel("Trenutni GP", 
            h2("Naslednja session: ", textOutput("sess_act_txt")),
            h4(textOutput("time_left")),
-           uiOutput("sel_GP_sess")),
+           uiOutput("sel_GP_sess"),
+           textOutput("trenutni_res_text"),
+           tableOutput("trenutni_res")),
   tabPanel("Klassifika - Piloti",
            uiOutput("sel_class_ind_gp"),
            fluidRow(
@@ -91,18 +93,23 @@ ui <- navbarPage(
   #########################################Regole#################################
   tabPanel("Regolamento",
     titlePanel("REGOLE FANTA F1"),
-    p( "In caso d je Sprint Race u cetrtkh se posla: ", " Prvh 5 ud Sprint Race"),
-              p("U petkh se posla: ", " Prvh 5 ud qualifik"),
-              p("U soboth se posla: "," Prvh 10 gara +Giro veloce"),
+    h3("Formazion se lhko nrdi do 2h ur pred eventm !!!!"),
+    h3( "In caso d je Sprint Race: "),
+              p("U cetrtek se posla: ", " Prvh 5 ud qualifik"),
+              p("U petek se posla: ", " Prvh 5 ud Sprint Race"),
+              p("U soboth se posla: "," Prvh 10 gara + Giro veloce"),
+    h3( "In caso d NI Sprint Race: "),
+              p("U petek se posla: ", " Prvh 5 ud qualifik"),
+              p("U soboth se posla: "," Prvh 10 gara + Giro veloce"),
               p(""),
-              p("Punti:"),
+    h3("Punti:"),
               p("5p ce ugans prvega"),
               p("3p z druzga"),
               p("2p z tretjega"),
               p("1p z usakega posamezno"),
              p( "3p giro veloce"),
               p(""),
-             p( "PRECEDENZE CLASSIFICA IN CASO DI PARITÀ :"),
+    h3( "PRECEDENZE CLASSIFICA IN CASO DI PARITÀ :"),
               p("Classifica Qualifiche; jma precedenzo prve ki je npiso griljo"),
              p( "Classifica Gara; jma precedenzo uni ki je nredo bulse n qualifikh"),
               p("Classifica weekend (GP) ; jma precedenzo uni ki je nredo bulso garo"),
@@ -140,7 +147,7 @@ server <- function(input, output, session) {
       V$ACCESS_ACTIVE = F
     }
     
-    if(length(GPs$Time_Sprint[V$active_GP_id]) > 1 & GPs$is_sprint){
+    if(length(GPs$Time_Sprint[V$active_GP_id]) > 1 & GPs$is_sprint[V$active_GP_id]){
       V$active_sprint <- difftime(as.POSIXct(GPs$Time_Sprint[V$active_GP_id], tz = "GMT"), now(tz="GMT"), units = "hours") > 2
     }
     V$active_quali <- difftime(as.POSIXct(GPs$Time_Quali[V$active_GP_id], tz = "GMT"), now(tz="GMT"), units = "hours") > 2
@@ -409,6 +416,7 @@ server <- function(input, output, session) {
       arrange(pts) %>%
       select(Username)  %>% mutate(Username = as.character(Username))
     
+    
     df %>% group_by(Username, Session) %>%
       mutate(Username = factor(Username, levels = as.character(s_order$Username))) %>%
       summarise(pts = sum(pts, na.rm = T),) %>%  
@@ -464,7 +472,7 @@ server <- function(input, output, session) {
       mutate(is_d1 = as.integer(Driver == "driver_1")) %>%
       ggplot(.) +
       geom_bar( aes(y = team, x = pts, fill = Driver), stat = "identity", show.legend = F) + 
-      geom_text( aes(y = team, x = pts *(1-is_d1) + is_d1*3.2, fill = Driver, label = Username),
+      geom_text( aes(y = team, x = pts *(1-is_d1) +  nchar(Driver)*is_d1, fill = Driver, label = Username),
                  position = "stack", hjust = 1) + ggtitle(paste("Classifica totale po koncanm ", input$class_sku_gp))
     
   })
@@ -537,6 +545,24 @@ server <- function(input, output, session) {
       )  
     } else{
       paste("", "")
+    }
+    
+  })
+  
+  output$trenutni_res <- renderTable({
+    gp_file <- paste0("db/GP_results/", GPs$Event[V$active_GP_id], ".csv")
+    if(file.exists(gp_file)){
+      tmp <- read.csv(gp_file)
+      tmp
+    }
+  })
+  
+  output$trenutni_res_text <- renderText({
+    gp_file <- paste0("db/GP_results/", GPs$Event[V$active_GP_id], ".csv")
+    if(file.exists(gp_file)){
+      "Rezultati sessioni:"
+    }else{
+      "Rezultati niso še na voljo.."
     }
     
   })
